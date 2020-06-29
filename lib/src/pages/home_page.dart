@@ -23,12 +23,16 @@ class HomePage extends StatelessWidget {
     return FutureBuilder(
       future: dataProvider.cargarData(),
       initialData: [],
-      builder: (context, AsyncSnapshot<List<dynamic>> snapshot){
+      builder: (context, AsyncSnapshot<dynamic> snapshot){
         
-        print(snapshot.data);
+        List<dynamic> names = [];
+        for (String i in snapshot.data){
+          names.add(i);
+        }
 
-        return ListView(
-          children:_createList(snapshot.data, context)
+
+        return Column(
+          children:_createList(names, context)
           );
       },
     );
@@ -40,19 +44,42 @@ class HomePage extends StatelessWidget {
 
     data.forEach( (opt) {
 
-      final ListTile widgetTemp = ListTile(
-        title: Text(opt['texto']),
-        // leading: getIcon(opt['icon']),
-        trailing: Icon(Icons.keyboard_arrow_right, color: Colors.blueAccent,),
-        onTap: (){
-
-          Navigator.pushNamed(context, opt['ruta']);
+    final card = Container(
+      // clipBehavior: Clip.antiAlias,
+      // elevation: 10.0,
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      child: Column(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.all(10.0),
+            child: Text(opt)
+            )
           
-        },
-        );
+        ]
+      ),
+    );
 
-        opciones..add(widgetTemp)
-                ..add(Divider());
+    final widgetTemp = Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            offset:Offset(2.0, 10),
+            blurRadius: 10.0,
+            spreadRadius: 2.0,
+            color: Colors.black26 
+          )
+        ],
+        borderRadius: BorderRadius.circular(20.0),
+        ),
+      child: ClipRRect(
+        child: card,
+        borderRadius: BorderRadius.circular(20.0),
+        )
+      );
+
+      opciones..add(widgetTemp)
+              ..add(Divider());
       }
     );
     return opciones;
