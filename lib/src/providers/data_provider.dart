@@ -22,17 +22,15 @@ class _DataProvider {
     Map mapJson = json.decode(resp);
     String ip = mapJson[name][0];
     String port = mapJson[name][1];
-    String url = '$ip:$port';
+    String url = 'http://$ip:$port/temps';
     List<dynamic> response = [];
 
-    response.add(url);
-    int int_port = int.tryParse(port);
-
-    Uri uri = new Uri(host: ip, port: int_port);
     final jsonFile = await http.get( url );
-    final decodedData = json.decode(jsonFile.body);
-    response.add(decodedData);
-    return response;
+    // print(jsonFile.body);
+    // Uri uri = new Uri(host: ip, port: int_port);
+    final decodedData = Map<String, dynamic>.from(json.decode(jsonFile.body));
+    // response.add(decodedData);
+    return decodedData;
   }
 }
 
