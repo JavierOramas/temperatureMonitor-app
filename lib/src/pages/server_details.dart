@@ -42,7 +42,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
           widget.currentServer = Server.fromJsonMap(snapshot.data);
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
-            child: Column(
+            child: ListView(
               children: <Widget>[
                 SizedBox(height: 20.0,),
                 // Text("IP/Domain: "+snapshot.data[0],style: TextStyle(fontSize: 15.0),textAlign: TextAlign.left,),
@@ -52,8 +52,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
                 ),
                 SizedBox(height:10.0),
                 LineChartTemperature(data: getData(widget.currentServer.date, widget.currentServer.packageId0)), 
-                getCores(widget.currentServer),
-              ],
+              ]+getCores(widget.currentServer)+getDisks(widget.currentServer),
             ),
           );
       },
@@ -77,8 +76,22 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     return output;
   }
 
-  Widget getCores(Server server) {
-    for()
+  List<Widget> getCores(Server server) {
+    List<Widget> output = [];
+    for(int i = 0; i <= server.nCores; i++){
+      output.add(Text('Core $i', style: TextStyle(fontWeight: FontWeight.bold),));
+      output.add(LineChartTemperature(data: getData(server.date, Map<String,double>.from(server.cores[i])),));
+    }
+    return output;
+  }
+
+  List<Widget> getDisks(Server currentServer) {
+    List<Widget> output = [];
+    for(String i in currentServer.disksName){
+      output.add(Text(i, style: TextStyle(fontWeight: FontWeight.bold),));
+      output.add(LineChartTemperature(data: getData(currentServer.date, Map<String,double>.from(currentServer.disks[i])),));
+    }
+    return output;
   }
 
 }
