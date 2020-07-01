@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
         }
 
 
-        return Column(
+        return ListView(
           children:_createList(names, context)
           );
       },
@@ -44,42 +44,19 @@ class HomePage extends StatelessWidget {
 
     data.forEach( (opt) {
 
-    final card = Container(
-      // clipBehavior: Clip.antiAlias,
-      // elevation: 10.0,
-      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-      child: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(10.0),
-            child: Text(opt)
-            )
+      final ListTile widgetTemp = ListTile(
+        title: Text(opt),
+        // leading: getIcon(opt['icon']),
+        trailing: Icon(Icons.keyboard_arrow_right, color: Colors.blueAccent,),
+        onTap: (){
+
+          Navigator.pushNamed(context, 'serverDetails',arguments: opt);
           
-        ]
-      ),
-    );
+        },
+        );
 
-    final widgetTemp = Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            offset:Offset(2.0, 10),
-            blurRadius: 10.0,
-            spreadRadius: 2.0,
-            color: Colors.black26 
-          )
-        ],
-        borderRadius: BorderRadius.circular(20.0),
-        ),
-      child: ClipRRect(
-        child: card,
-        borderRadius: BorderRadius.circular(20.0),
-        )
-      );
-
-      opciones..add(widgetTemp)
-              ..add(Divider());
+        opciones..add(widgetTemp)
+                ..add(Divider());
       }
     );
     return opciones;
