@@ -51,12 +51,34 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
                     textAlign: TextAlign.left,
                 ),
                 SizedBox(height:10.0),
-                LineChartTemperature(data: widget.currentServer,), 
+                LineChartTemperature(data: getData(widget.currentServer.date, widget.currentServer.packageId0)), 
+                getCores(widget.currentServer),
               ],
             ),
           );
       },
     );
+  }
+
+  Map<double,double> getData(Map<String,String> dataX, Map<String,double> dataY) {
+    Map<double,double> output = new Map<double,double>();
+    // List<DateTime> dates_temp = [];
+    // double initial = 1;
+    // for(String i in dataX.keys){
+    //   initial = DateTime.parse(dataX[i]).millisecondsSinceEpoch/1;
+    //   break;
+    // }
+    for(String i in dataY.keys){
+      // DateTime date = DateTime.parse(dataX[i]);
+      int idx = int.tryParse(i);
+      output[idx/1] = dataY[i];
+      // dates_temp.add(date);
+    }
+    return output;
+  }
+
+  Widget getCores(Server server) {
+    for()
   }
 
 }
