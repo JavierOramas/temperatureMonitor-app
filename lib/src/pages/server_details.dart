@@ -86,7 +86,13 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   }
 
   List<Widget> getDisks(Server currentServer) {
-    List<Widget> output = [];
+    List<Widget> output = [
+      SizedBox(height: 10.0,),
+      Text("HDD Info", 
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.0),
+        textAlign: TextAlign.left,
+      ),
+    ];
     for(String i in currentServer.disksName){
       output.add(Text(i, style: TextStyle(fontWeight: FontWeight.bold),));
       output.add(LineChartTemperature(data: getData(currentServer.date, Map<String,double>.from(currentServer.disks[i])),));

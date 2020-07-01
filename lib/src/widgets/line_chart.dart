@@ -113,7 +113,7 @@ class _LineChartTemperatureState extends State<LineChartTemperature> {
           FlBorderData(show: true, border: Border.all(color: const Color(0xff37434d), width: 1)),
       minX: 0,
       maxX: getMax(widget.data),
-      minY: 20,
+      minY: getMinY(widget.data)-5,
       maxY: getMaxY(widget.data)+10,
       lineBarsData: [
         LineChartBarData(
@@ -254,5 +254,13 @@ class _LineChartTemperatureState extends State<LineChartTemperature> {
       maxV = max(maxV, i);
     }
     return maxV;
+  }
+
+  getMinY(Map<double, double> data) {
+    double minV = 1000000000;
+    for (double i in data.values){
+      minV = min(minV, i);
+    }
+    return minV;
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class Server {
   List cores = [];
-  List disks = [];
+  Map<String,Map> disks = Map<String,Map>();
   Map<String, double> packageId0;
   Map<String, String> date;
   List<dynamic> disksName;
@@ -26,7 +26,7 @@ class Server {
       this.cores.add(json['Core $i']);
     }
     for(String i in this.disksName){
-      this.disks.add(json[i]);
+      this.disks[i] = (json[i]);
     }
   }
 }
