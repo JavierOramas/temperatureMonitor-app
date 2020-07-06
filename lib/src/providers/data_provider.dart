@@ -16,7 +16,7 @@ class _DataProvider {
     // return [];
   }
 
-  Future<dynamic> cargarDetails(String name) async {
+  Future<Map<String, dynamic>> cargarDetails(String name) async {
     final resp = await rootBundle.loadString('data/serverslist.json');
     Map mapJson = json.decode(resp);
     String ip = mapJson[name][0];
@@ -31,7 +31,7 @@ class _DataProvider {
     return decodedData;
   }
 
-  void ObteneMediciones(String name) async {
+  Future<Map<String, dynamic>> ObteneMediciones(String name) async {
     final resp = await rootBundle.loadString('data/serverslist.json');
     Map mapJson = json.decode(resp);
     String ip = mapJson[name][0];
@@ -39,9 +39,10 @@ class _DataProvider {
     String url = 'http://$ip:$port/measure';
 
     final jsonFile = await http.get(url);
+    return cargarDetails(name);
   }
 
-  void LimpiarDatos(String name) async {
+  Future<Map<String, dynamic>> LimpiarDatos(String name) async {
     final resp = await rootBundle.loadString('data/serverslist.json');
     Map mapJson = json.decode(resp);
     String ip = mapJson[name][0];
@@ -49,6 +50,7 @@ class _DataProvider {
     String url = 'http://$ip:$port/clean';
 
     final jsonFile = await http.get(url);
+    return cargarDetails(name);
   }
 }
 

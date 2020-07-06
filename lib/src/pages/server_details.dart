@@ -27,6 +27,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
+            heroTag: 'measure',
             onPressed: () {
               dataProvider.ObteneMediciones(name);
               this.setState(() {});
@@ -37,14 +38,15 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
           SizedBox(
             width: 10.0,
           ),
-          FloatingActionButton(
-            onPressed: () {
-              dataProvider.LimpiarDatos(name);
-              this.setState(() {});
-            },
-            child: Icon(Icons.brush),
-            backgroundColor: Colors.deepOrangeAccent,
-          ),
+          // FloatingActionButton(
+          //   heroTag: 'Clean',
+          //   onPressed: () {
+          //     dataProvider.LimpiarDatos(name);
+          //     this.setState(() {});
+          //   },
+          //   child: Icon(Icons.brush),
+          //   backgroundColor: Colors.deepOrangeAccent,
+          // ),
         ],
       ),
     );
