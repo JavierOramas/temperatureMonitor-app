@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class Server {
   List cores = [];
   Map<String,Map> disks = Map<String,Map>();
