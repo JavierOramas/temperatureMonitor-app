@@ -38,15 +38,15 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
           SizedBox(
             width: 10.0,
           ),
-          // FloatingActionButton(
-          //   heroTag: 'Clean',
-          //   onPressed: () {
-          //     dataProvider.LimpiarDatos(name);
-          //     this.setState(() {});
-          //   },
-          //   child: Icon(Icons.brush),
-          //   backgroundColor: Colors.deepOrangeAccent,
-          // ),
+          FloatingActionButton(
+            heroTag: 'Clean',
+            onPressed: () {
+              dataProvider.LimpiarDatos(name);
+              this.setState(() {});
+            },
+            child: Icon(Icons.brush),
+            backgroundColor: Colors.deepOrangeAccent,
+          ),
         ],
       ),
     );
