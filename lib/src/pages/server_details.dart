@@ -14,6 +14,7 @@ class ServerDetailsPage extends StatefulWidget {
 class _ServerDetailsPageState extends State<ServerDetailsPage> {
   Widget widgets;
   String name = '';
+  int lastIdx = 0;
   @override
   Widget build(BuildContext context) {
     name = ModalRoute.of(context).settings.arguments;
@@ -151,18 +152,22 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     switch (index) {
       case 0:
         widgets = _getCores(name);
+        lastIdx = 0;
         this.setState(() {});
         break;
       case 1:
         widgets = _getDisks(name);
+        lastIdx = 1;
         this.setState(() {});
         break;
       case 2:
         dataProvider.ObteneMediciones(name);
+        lastIdx == 0 ? widgets = _getCores(name) : widgets = _getDisks(name);
         this.setState(() {});
         break;
       case 3:
         dataProvider.LimpiarDatos(name);
+        lastIdx == 0 ? widgets = _getCores(name) : widgets = _getDisks(name);
         this.setState(() {});
         break;
     }
