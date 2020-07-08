@@ -12,78 +12,77 @@ class ServerDetailsPage extends StatefulWidget {
 }
 
 class _ServerDetailsPageState extends State<ServerDetailsPage> {
+  Widget widgets;
+  String name = '';
+  int lastIdx = 0;
   @override
   Widget build(BuildContext context) {
-    final String name = ModalRoute.of(context).settings.arguments;
-
+    name = ModalRoute.of(context).settings.arguments;
+    widgets = _getCores(name);
     return Scaffold(
       appBar: AppBar(
         title: Text(name),
         backgroundColor: Colors.deepOrange,
       ),
-      body: _lista(name),
-      floatingActionButton: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          FloatingActionButton(
-            heroTag: 'measure',
-            onPressed: () {
-              dataProvider.ObteneMediciones(name);
-              this.setState(() {});
-            },
-            backgroundColor: Colors.deepOrangeAccent,
-            child: Icon(Icons.av_timer),
-          ),
-          SizedBox(
-            width: 10.0,
-          ),
-          FloatingActionButton(
-            heroTag: 'Clean',
-            onPressed: () {
-              dataProvider.LimpiarDatos(name);
-              this.setState(() {});
-            },
-            child: Icon(Icons.brush),
+      body: widgets,
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.deepOrangeAccent,
+        currentIndex: 0,
+        onTap: (index) => _bottomNavBarSelect(index, widget.currentServer),
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.apps),
+            title: Text("CPU"),
             backgroundColor: Colors.deepOrangeAccent,
           ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.storage),
+              title: Text("HDD"),
+              backgroundColor: Colors.deepOrangeAccent),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.av_timer),
+            title: Text("Measure"),
+            backgroundColor: Colors.deepOrangeAccent,
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.brush),
+              title: Text("Clear"),
+              backgroundColor: Colors.deepOrangeAccent)
         ],
       ),
     );
   }
 
-  Widget _lista(String name) {
+  Widget _getCores(String name) {
     return FutureBuilder(
       future: dataProvider.cargarDetails(name),
       initialData: [],
       builder: (context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.hasData) {
           widget.currentServer = Server.fromJsonMap(snapshot.data);
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            child: ListView(
-              children: <Widget>[
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    // Text("IP/Domain: "+snapshot.data[0],style: TextStyle(fontSize: 15.0),textAlign: TextAlign.left,),
-                    Text(
-                      "CPU Info",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 17.0),
-                      textAlign: TextAlign.left,
-                    ),
-                    SizedBox(height: 10.0),
-                    LineChartTemperature(
-                        data: getData(widget.currentServer.date,
-                            widget.currentServer.packageId0)),
-                  ] +
-                  getCores(widget.currentServer) +
-                  getDisks(widget.currentServer),
-            ),
+          return ListView(
+            padding: EdgeInsets.all(10.0),
+            children: getCores(widget.currentServer),
           );
         } else
-          return Center(child: CircularProgressIndicator());
+          return CircularProgressIndicator();
+      },
+    );
+  }
+
+  Widget _getDisks(String name) {
+    return FutureBuilder(
+      future: dataProvider.cargarDetails(name),
+      initialData: [],
+      builder: (context, AsyncSnapshot<dynamic> snapshot) {
+        if (snapshot.hasData) {
+          widget.currentServer = Server.fromJsonMap(snapshot.data);
+          return ListView(
+            padding: EdgeInsets.all(10.0),
+            children: getDisks(widget.currentServer),
+          );
+        } else
+          return CircularProgressIndicator();
       },
     );
   }
@@ -91,12 +90,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   Map<double, double> getData(
       Map<String, String> dataX, Map<String, double> dataY) {
     Map<double, double> output = new Map<double, double>();
-    // List<DateTime> dates_temp = [];
-    // double initial = 1;
-    // for(String i in dataX.keys){
-    //   initial = DateTime.parse(dataX[i]).millisecondsSinceEpoch/1;
-    //   break;
-    // }
+
     for (String i in dataY.keys) {
       // DateTime date = DateTime.parse(dataX[i]);
       int idx = int.tryParse(i);
@@ -107,7 +101,17 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   }
 
   List<Widget> getCores(Server server) {
-    List<Widget> output = [];
+    List<Widget> output = [
+      Text(
+        "CPU Info",
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.0),
+        textAlign: TextAlign.left,
+      ),
+      SizedBox(height: 10.0),
+      LineChartTemperature(
+          data: getData(
+              widget.currentServer.date, widget.currentServer.packageId0)),
+    ];
     for (int i = 0; i <= server.nCores; i++) {
       output.add(Text(
         'Core $i',
@@ -117,6 +121,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
         data: getData(server.date, Map<String, double>.from(server.cores[i])),
       ));
     }
+
     return output;
   }
 
@@ -144,13 +149,28 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     return output;
   }
 
-  Widget Menu(String name) {
-    return Center(
-      child: Column(
-        children: <Widget>[
-          FlatButton(onPressed: () {}, child: Text('Measure Temperature'))
-        ],
-      ),
-    );
+  _bottomNavBarSelect(int index, Server currentServer) {
+    switch (index) {
+      case 0:
+        widgets = _getCores(name);
+        lastIdx = 0;
+        this.setState(() {});
+        break;
+      case 1:
+        widgets = _getDisks(name);
+        lastIdx = 1;
+        this.setState(() {});
+        break;
+      case 2:
+        dataProvider.ObteneMediciones(name);
+        lastIdx == 0 ? widgets = _getCores(name) : widgets = _getDisks(name);
+        this.setState(() {});
+        break;
+      case 3:
+        dataProvider.LimpiarDatos(name);
+        lastIdx == 0 ? widgets = _getCores(name) : widgets = _getDisks(name);
+        this.setState(() {});
+        break;
+    }
   }
 }

@@ -1,4 +1,9 @@
+import 'dart:convert';
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:temp_monitor_app/src/providers/data_provider.dart';
 
 class AddServerPage extends StatefulWidget {
   AddServerPage({Key key}) : super(key: key);
@@ -96,8 +101,13 @@ class _AddServerPageState extends State<AddServerPage> {
     return FlatButton(
       child: Text("Add"),
       color: Colors.deepOrange,
-      onPressed: () {
-        //write ip and port to serverslist file
+      onPressed: () async {
+        final resp = await rootBundle.loadString('data/serverslist.json');
+        Map mapJson = json.decode(resp);
+        if (!mapJson.containsKey(_name)) {
+          mapJson[_name] = [_ip, _port];
+        }
+        //Add error message
       },
     );
   }
