@@ -6,60 +6,51 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:Text("Temperature Monitor"),
+        title: Text("Temperature Monitor"),
         backgroundColor: Colors.deepOrange,
       ),
-      body: _lista(),     
+      body: _lista(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushNamed(context, 'addServer'),
         child: Icon(Icons.add),
         backgroundColor: Colors.deepOrange,
-      ), 
+      ),
     );
   }
-      
+
   Widget _lista() {
-    
     return FutureBuilder(
       future: dataProvider.cargarData(),
       initialData: [],
-      builder: (context, AsyncSnapshot<dynamic> snapshot){
-        
+      builder: (context, AsyncSnapshot<dynamic> snapshot) {
         List<dynamic> names = [];
-        for (String i in snapshot.data){
+        for (String i in snapshot.data) {
           names.add(i);
         }
 
-
-        return ListView(
-          children:_createList(names, context)
-          );
+        return ListView(children: _createList(names, context));
       },
     );
-
   }
 
   _createList(List<dynamic> data, BuildContext context) {
     final List<Widget> opciones = [];
 
-    data.forEach( (opt) {
-
+    data.forEach((opt) {
       final ListTile widgetTemp = ListTile(
         title: Text(opt),
         // leading: getIcon(opt['icon']),
-        trailing: Icon(Icons.keyboard_arrow_right, color: Colors.blueAccent,),
-        onTap: (){
-
-          Navigator.pushNamed(context, 'serverDetails',arguments: opt);
-          
+        trailing: Icon(
+          Icons.keyboard_arrow_right,
+          color: Colors.blueAccent,
+        ),
+        onTap: () {
+          Navigator.pushNamed(context, 'serverDetails', arguments: opt);
         },
-        );
+      );
 
-        opciones..add(widgetTemp)
-                ..add(Divider());
-      }
-    );
+      opciones..add(widgetTemp)..add(Divider());
+    });
     return opciones;
   }
-
 }
