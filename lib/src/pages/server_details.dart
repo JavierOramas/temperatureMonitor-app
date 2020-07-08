@@ -18,7 +18,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   @override
   Widget build(BuildContext context) {
     name = ModalRoute.of(context).settings.arguments;
-    widgets = _getCores(name);
+    // widgets = _getCores(name);
     return Scaffold(
       appBar: AppBar(
         title: Text(name),
