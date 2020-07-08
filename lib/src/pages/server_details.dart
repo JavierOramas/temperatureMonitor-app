@@ -22,31 +22,28 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
         backgroundColor: Colors.deepOrange,
       ),
       body: _lista(name),
-      floatingActionButton: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          FloatingActionButton(
-            heroTag: 'measure',
-            onPressed: () {
-              dataProvider.ObteneMediciones(name);
-              this.setState(() {});
-            },
-            backgroundColor: Colors.deepOrangeAccent,
-            child: Icon(Icons.av_timer),
-          ),
-          SizedBox(
-            width: 10.0,
-          ),
-          FloatingActionButton(
-            heroTag: 'Clean',
-            onPressed: () {
-              dataProvider.LimpiarDatos(name);
-              this.setState(() {});
-            },
-            child: Icon(Icons.brush),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.deepOrangeAccent,
+        elevation: 20.0,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.apps),
+            title: Text("CPU"),
             backgroundColor: Colors.deepOrangeAccent,
           ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.storage),
+              title: Text("HDD"),
+              backgroundColor: Colors.deepOrangeAccent),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.av_timer),
+            title: Text("Measure"),
+            backgroundColor: Colors.deepOrangeAccent,
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.brush),
+              title: Text("Clear"),
+              backgroundColor: Colors.deepOrangeAccent)
         ],
       ),
     );
