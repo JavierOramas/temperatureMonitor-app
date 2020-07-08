@@ -11,9 +11,11 @@ class _DataProvider {
 
   Future<dynamic> cargarData() async {
     final resp = await rootBundle.loadString('data/serverslist.json');
-    Map mapJson = json.decode(resp);
-    return mapJson.keys;
-    // return [];
+    if (resp.length > 0) {
+      Map mapJson = json.decode(resp);
+      return mapJson.keys;
+    }
+    return [];
   }
 
   Future<Map<String, dynamic>> cargarDetails(String name) async {
