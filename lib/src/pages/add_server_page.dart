@@ -101,12 +101,12 @@ class _AddServerPageState extends State<AddServerPage> {
     return FlatButton(
       child: Text("Add"),
       color: Colors.deepOrange,
-      onPressed: () async {
-        final resp = await rootBundle.loadString('data/serverslist.json');
-        Map mapJson = json.decode(resp);
+      onPressed: () {
+        Map mapJson = dataProvider.fileContent;
         if (!mapJson.containsKey(_name)) {
           mapJson[_name] = [_ip, _port];
         }
+        dataProvider.writeContent(mapJson);
         //Add error message
       },
     );

@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   fl_chart: ^0.10.0
+  path_provider: ^1.6.11
     # charts_flutter: ^0.2.0
 
   # The following adds the Cupertino Icons font to your application.
