@@ -47,7 +47,9 @@ class _DataProvider {
   }
 
   cargarData() {
-    return fileContent.length > 0 ? fileContent.keys : [];
+    return fileContent != null && fileContent.length > 0
+        ? fileContent.keys
+        : [];
   }
 
   Future<Map<String, dynamic>> cargarDetails(String name) async {
