@@ -22,7 +22,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(name),
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: Colors.deepOrangeAccent,
       ),
       body: RefreshIndicator(
         child: widgets,
