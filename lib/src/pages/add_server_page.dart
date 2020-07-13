@@ -99,7 +99,10 @@ class _AddServerPageState extends State<AddServerPage> {
 
   _confirmAdd() {
     return FlatButton(
-      child: Text("Add"),
+      child: Text(
+        "Add",
+        style: TextStyle(color: Colors.white),
+      ),
       color: Colors.deepOrange,
       onPressed: () {
         Map mapJson = dataProvider.fileContent;
@@ -108,8 +111,7 @@ class _AddServerPageState extends State<AddServerPage> {
           mapJson[_name] = [_ip, _port];
         }
         dataProvider.writeContent(mapJson);
-        this.setState(() {});
-
+        Navigator.pop(context);
         //Add error message
       },
     );

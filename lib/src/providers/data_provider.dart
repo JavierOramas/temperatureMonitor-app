@@ -41,6 +41,14 @@ class _DataProvider {
       createFile(content);
   }
 
+  void deleteEntry(String option) {
+    if (fileExists) {
+      Map jsonFileContent = json.decode(jsonFile.readAsStringSync());
+      jsonFileContent.remove(option);
+      jsonFile.writeAsStringSync(json.encode(jsonFileContent));
+    }
+  }
+
   cargarData() {
     jsonFile = new File(dir.path + '/' + fileName);
     fileExists = jsonFile.existsSync();
