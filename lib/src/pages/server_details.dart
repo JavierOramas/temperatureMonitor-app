@@ -18,14 +18,13 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   @override
   Widget build(BuildContext context) {
     name = ModalRoute.of(context).settings.arguments;
-    // widgets = _getCores(name);
     return Scaffold(
       appBar: AppBar(
         title: Text(name),
         backgroundColor: Colors.deepOrangeAccent,
       ),
       body: RefreshIndicator(
-        child: widgets,
+        child: widgets == null ? _getCores(name) : widgets,
         onRefresh: () => refresh(context),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -177,7 +176,8 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
     }
   }
 
-  Future<void> refresh(context) {
+  Future<void> refresh(context) async {
+    await _bottomNavBarSelect(2, widget.currentServer);
     this.setState(() {});
     return null;
   }
