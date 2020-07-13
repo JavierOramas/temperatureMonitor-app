@@ -24,7 +24,10 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
         title: Text(name),
         backgroundColor: Colors.deepOrange,
       ),
-      body: widgets,
+      body: RefreshIndicator(
+        child: widgets,
+        onRefresh: () => refresh(context),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.deepOrangeAccent,
         currentIndex: 0,
@@ -172,5 +175,10 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
         this.setState(() {});
         break;
     }
+  }
+
+  Future<void> refresh(context) {
+    this.setState(() {});
+    return null;
   }
 }
