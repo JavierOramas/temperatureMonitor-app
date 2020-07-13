@@ -1,32 +1,27 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
+// import 'dart:html';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import "package:path_provider/path_provider.dart";
+import 'package:permission_handler/permission_handler.dart';
 
 class _DataProvider {
   List<dynamic> opciones = [];
   File jsonFile;
-  Directory dir;
+  Directory dir =
+      Directory("/data/user/0/com.example.temp_monitor_app/app_flutter");
   String fileName = 'serverslist.json';
   bool fileExists = false;
-  Map fileContent;
+  Map<String, List<dynamic>> fileContent;
 
   _DataProvider() {
     initState();
-    cargarData();
   }
 
-  void initState() {
-    getApplicationDocumentsDirectory().then((Directory directory) {
-      dir = directory;
-      jsonFile = new File(dir.path + '/' + fileName);
-      fileExists = jsonFile.existsSync();
-      if (fileExists) {
-        fileContent = json.decode(jsonFile.readAsStringSync());
-      }
-    });
+  void initState() async {
+    // getApplicationDocumentsDirectory().then((path) => {print(path)});
+    dir = await getApplicationDocumentsDirectory();
+    print(dir);
   }
 
   File createFile(Map content) {
@@ -47,8 +42,17 @@ class _DataProvider {
   }
 
   cargarData() {
+    jsonFile = new File(dir.path + '/' + fileName);
+    fileExists = jsonFile.existsSync();
+    if (fileExists) {
+      // fileContent = json.decode(jsonFile.readAsStringSync());
+      // fileContent = Map<String, List<String>>.from(fileContent);
+      fileContent = Map<String, List<dynamic>>.from(
+          json.decode(jsonFile.readAsStringSync()));
+    }
+
     return fileContent != null && fileContent.length > 0
-        ? fileContent.keys
+        ? fileContent.keys.toList()
         : [];
   }
 

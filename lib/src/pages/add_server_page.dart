@@ -103,10 +103,13 @@ class _AddServerPageState extends State<AddServerPage> {
       color: Colors.deepOrange,
       onPressed: () {
         Map mapJson = dataProvider.fileContent;
-        if (!mapJson.containsKey(_name)) {
+        if (mapJson == null) mapJson = new Map<String, dynamic>();
+        if (mapJson == null || !mapJson.containsKey(_name)) {
           mapJson[_name] = [_ip, _port];
         }
         dataProvider.writeContent(mapJson);
+        this.setState(() {});
+
         //Add error message
       },
     );

@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
         title: Text("Temperature Monitor"),
         backgroundColor: Colors.deepOrange,
       ),
-      body: _lista(),
+      body: _lista(context),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushNamed(context, 'addServer'),
         child: Icon(Icons.add),
@@ -18,19 +18,8 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _lista() {
-    return FutureBuilder(
-      future: dataProvider.cargarData(),
-      initialData: [],
-      builder: (context, AsyncSnapshot<dynamic> snapshot) {
-        List<dynamic> names = [];
-        for (String i in snapshot.data) {
-          names.add(i);
-        }
-
-        return ListView(children: _createList(names, context));
-      },
-    );
+  Widget _lista(BuildContext context) {
+    return ListView(children: _createList(dataProvider.cargarData(), context));
   }
 
   _createList(List<dynamic> data, BuildContext context) {
@@ -39,10 +28,13 @@ class HomePage extends StatelessWidget {
     data.forEach((opt) {
       final ListTile widgetTemp = ListTile(
         title: Text(opt),
-        // leading: getIcon(opt['icon']),
+        leading: Icon(
+          Icons.computer,
+          color: Colors.orangeAccent,
+        ),
         trailing: Icon(
           Icons.keyboard_arrow_right,
-          color: Colors.blueAccent,
+          color: Colors.orangeAccent,
         ),
         onTap: () {
           Navigator.pushNamed(context, 'serverDetails', arguments: opt);
