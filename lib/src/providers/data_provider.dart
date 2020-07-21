@@ -69,11 +69,14 @@ class _DataProvider {
     String ip = mapJson[name][0];
     String port = mapJson[name][1];
     String url = 'http://$ip:$port/temps';
+    String jsonFiletxt = '';
+    try {
+      jsonFiletxt = (await http.get(url)).body;
+    } catch (e) {}
 
-    final jsonFile = await http.get(url);
     // print(jsonFile.body);
     // Uri uri = new Uri(host: ip, port: int_port);
-    final decodedData = Map<String, dynamic>.from(json.decode(jsonFile.body));
+    final decodedData = Map<String, dynamic>.from(json.decode(jsonFiletxt));
     // response.add(decodedData);
     return decodedData;
   }
