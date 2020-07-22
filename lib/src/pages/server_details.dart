@@ -6,7 +6,6 @@ import 'package:temp_monitor_app/src/widgets/line_chart.dart';
 class ServerDetailsPage extends StatefulWidget {
   ServerDetailsPage({Key key}) : super(key: key);
   Server currentServer;
-
   @override
   _ServerDetailsPageState createState() => _ServerDetailsPageState();
 }
@@ -29,7 +28,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.deepOrangeAccent,
-        currentIndex: 0,
+        currentIndex: lastIdx,
         showUnselectedLabels: true,
         onTap: (index) => _bottomNavBarSelect(index, widget.currentServer),
         items: [
