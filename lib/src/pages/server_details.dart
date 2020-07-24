@@ -30,6 +30,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
         backgroundColor: Colors.deepOrangeAccent,
         currentIndex: lastIdx,
         showUnselectedLabels: true,
+        type: BottomNavigationBarType.shifting,
         onTap: (index) => _bottomNavBarSelect(index, widget.currentServer),
         items: [
           BottomNavigationBarItem(
