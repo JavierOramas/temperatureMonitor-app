@@ -36,12 +36,12 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
         onTap: (index) => _bottomNavBarSelect(index, widget.currentServer),
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.apps),
+            icon: Icon(Icons.memory),
             title: Text("CPU"),
             backgroundColor: Colors.deepOrangeAccent,
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.storage),
+              icon: Icon(Icons.save),
               title: Text("HDD"),
               backgroundColor: Colors.deepOrangeAccent),
           BottomNavigationBarItem(

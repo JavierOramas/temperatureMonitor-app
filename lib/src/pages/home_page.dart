@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
       final ListTile widgetTemp = ListTile(
           title: Text(opt),
           leading: Icon(
-            Icons.computer,
+            Icons.storage,
             color: Colors.orangeAccent,
           ),
           trailing: Icon(
