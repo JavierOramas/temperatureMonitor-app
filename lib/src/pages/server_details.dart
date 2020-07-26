@@ -41,7 +41,7 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
             backgroundColor: Colors.deepOrangeAccent,
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.save),
+              icon: Icon(Icons.storage),
               title: Text("HDD"),
               backgroundColor: Colors.deepOrangeAccent),
           BottomNavigationBarItem(
