@@ -59,37 +59,45 @@ class _ServerDetailsPageState extends State<ServerDetailsPage> {
   }
 
   Widget _getCores(String name) {
-    return FutureBuilder(
-      future: dataProvider.cargarDetails(name),
-      initialData: [],
-      builder: (context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.hasData) {
-          widget.currentServer = Server.fromJsonMap(snapshot.data);
-          return ListView(
-            padding: EdgeInsets.all(10.0),
-            children: getCores(widget.currentServer),
-          );
-        } else
-          return CircularProgressIndicator();
-      },
-    );
+    try {
+      return FutureBuilder(
+        future: dataProvider.cargarDetails(name),
+        initialData: [],
+        builder: (context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            widget.currentServer = Server.fromJsonMap(snapshot.data);
+            return ListView(
+              padding: EdgeInsets.all(10.0),
+              children: getCores(widget.currentServer),
+            );
+          } else
+            return CircularProgressIndicator();
+        },
+      );
+    } catch (e) {
+      return CircularProgressIndicator();
+    }
   }
 
   Widget _getDisks(String name) {
-    return FutureBuilder(
-      future: dataProvider.cargarDetails(name),
-      initialData: [],
-      builder: (context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.hasData) {
-          widget.currentServer = Server.fromJsonMap(snapshot.data);
-          return ListView(
-            padding: EdgeInsets.all(10.0),
-            children: getDisks(widget.currentServer),
-          );
-        } else
-          return CircularProgressIndicator();
-      },
-    );
+    try {
+      return FutureBuilder(
+        future: dataProvider.cargarDetails(name),
+        initialData: [],
+        builder: (context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            widget.currentServer = Server.fromJsonMap(snapshot.data);
+            return ListView(
+              padding: EdgeInsets.all(10.0),
+              children: getDisks(widget.currentServer),
+            );
+          } else
+            return CircularProgressIndicator();
+        },
+      );
+    } catch (e) {
+      return CircularProgressIndicator();
+    }
   }
 
   Map<double, double> getData(
